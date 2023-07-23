@@ -1,0 +1,10 @@
+-- 주문년월별 계좌이체(PAY_TP = BANK) 건수와 카드결제(PAY_TP = CARD) 건수
+-- 이때 '계좌이체 건수'와 '카드결제 건수'를 각각의 컬럼으로 표시해야 한다.
+SELECT TO_CHAR(T1.ORD_DT, 'YYYYMM') 				    AS ORD_YM
+	   , SUM(CASE WHEN T1.PAY_TP = 'BANK' THEN 1 END) AS BANK_PAY_CNT
+	   , SUM(CASE WHEN T1.PAY_TP = 'CARD' THEN 1 END) AS CARD_PAY_CNT
+FROM   T_ORD T1
+WHERE  1 = 1
+AND    T1.ORD_ST = 'COMP'
+GROUP BY TO_CHAR(T1.ORD_DT, 'YYYYMM')
+ORDER BY TO_CHAR(T1.ORD_DT, 'YYYYMM');
